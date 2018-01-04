@@ -3,8 +3,6 @@
 
 #include <stddef.h>
 
-int lib_hello();
-
 typedef struct list_head {
 	struct list_head* prev;
 	struct list_head* next;
@@ -33,3 +31,22 @@ static inline void list_push(list_head* head, list_head* list) {
 	for (pos = (head)->next; pos != NULL; pos = (pos)->next)
 
 #endif
+
+static inline list_head* list_remove_at(list_head* head, int pos) {
+	list_head* node = head;
+	for (int i = 0; i < pos + 1; node = node->next, i++);
+
+	if (node->next != NULL) {
+		node->next->prev = node->prev;
+	}
+	node->prev->next = node->next;
+
+	return node;
+}
+
+static inline int list_size(list_head* head) {
+	list_head* node = head;
+	int i = 0;
+	for (;node->next != NULL; node = node->next, i++);
+	return i;
+}

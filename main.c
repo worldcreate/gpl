@@ -14,10 +14,11 @@ int main(void) {
 	t.no = 3;
 	test t2;
 	t2.no = 4;
+	test t3;
+	t3.no = 5;
 	list_push(&head, &t.list);
 	list_push(&head, &t2.list);
-	test* p = list_entry(head.next->next, test, list);
-	printf("%d\n", p->no);
+	list_push(&head, &t3.list);
 
 	list_head* node;
 	list_for_each(node, &head) {
@@ -25,4 +26,13 @@ int main(void) {
 		printf("%d\n", t->no);
 	}
 
+	printf("size = %d\n", list_size(&head));
+	list_remove_at(&head, 2);
+
+	list_for_each(node, &head) {
+		test* t = list_entry(node, test, list);
+		printf("%d\n", t->no);
+	}
+
+	printf("size = %d\n", list_size(&head));
 }
